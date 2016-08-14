@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd" >
+<log4j:configuration>
+
+	
+
+	<appender name="ITEMINFO" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="D:/SPRINGHIBERNATE_INFO.log" />
+		<param name="Threshold" value="INFO" />
+		<param name="bufferSize" value="16384" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%-5p | %d | %c | %C | %M - %m%n" />
+		</layout>
+	</appender>
+	
+	<root>
+		<level value="INFO" />
+		<appender-ref ref="ITEMINFO" />
+	</root>
+</log4j:configuration>

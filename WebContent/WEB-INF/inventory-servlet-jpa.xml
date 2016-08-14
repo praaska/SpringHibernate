@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://www.springframework.org/schema/beans"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.0.xsd">
+  <context:component-scan base-package="org.haritha.learning.controller" />
+  <context:annotation-config/>
+    
+    <bean id="jpaItemMasterDao" class="org.haritha.learning.jpa.dao.impl.JpaItemMasterDaoImpl">
+      <property name="entityManagerFactory" ref="entityManagerFactory" />
+          </bean>
+    <bean id="jpaLoginDao" class="org.haritha.learning.jpa.dao.impl.JpaLoginDaoImpl">
+         <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
+    
+   <bean id="itemMasterService" class="org.haritha.learning.service.impl.ItemMasterServiceImpl">
+       <property name="jpaItemMasterDao" ref="jpaItemMasterDao"/>
+   </bean>
+    <bean id="loginService" class="org.haritha.learning.service.impl.LoginServiceImpl">
+       <property name="jpaLoginDao" ref="jpaLoginDao"/>
+   </bean>
+ <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+    <property name="persistenceUnitName" value="Eclipselink_JPA" />
+    
+    <property name="dataSource" ref="dataSource" />
+    <property name="jpaPropertyMap">
+  <map>
+    <entry key="eclipselink.weaving" value="false"/>
+  </map>
+</property>
+     <!--  <property name="packagesToScan" value="org.haritha.learning.dto" /> -->
+      <!-- <property name="jpaVendorAdapter">
+         <bean class="org.springframework.orm.jpa.vendor.OpenJpaVendorAdapter" />
+      </property> -->
+   <!--    <property name="jpaProperties">
+         <props>
+            <prop key="eclipselink.ddl-generation">create-drop</prop>
+            <prop key="jpaDialect">org.springframework.orm.jpa.JpaDialect</prop>
+         </props>
+      </property> -->
+    
+ </bean>
+ 
+ <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+     <property name="driverClassName" value="org.postgresql.Driver"/>
+     <property name="url" value="jdbc:postgresql://localhost:5432/hibernatedb"/>
+     <property name="username" value="postgres" />
+      <property name="password" value="Makesure1!" />
+      
+ </bean>
+ 
+  <tx:annotation-driven />
+
+    <bean id="jpaTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+           <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/Pages/"></property>
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+ 
+ 
+ 
+ 
+ 
+ 
+ </beans>

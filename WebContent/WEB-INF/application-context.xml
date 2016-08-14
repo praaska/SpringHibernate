@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://www.springframework.org/schema/beans"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+ 
+    <context:component-scan base-package="org.haritha.learning.controller" />
+    <context:annotation-config/>
+    
+    <bean id="itemMasterDao" class="org.haritha.learning.hibernate.dao.impl.ItemMasterDaoImpl">
+        <constructor-arg>
+            <ref bean="sessionFactory" />
+        </constructor-arg>
+    </bean>
+    <bean id="loginDao" class="org.haritha.learning.hibernate.dao.impl.LoginDaoImpl">
+        <constructor-arg>
+            <ref bean="sessionFactory" />
+        </constructor-arg>
+    </bean>
+   <bean id="itemMasterService" class="org.haritha.learning.service.impl.ItemMasterServiceImpl">
+       <property name="itemMasterDao" ref="itemMasterDao"/>
+   </bean>
+    <bean id="loginService" class="org.haritha.learning.service.impl.LoginServiceImpl">
+       <property name="loginDao" ref="loginDao"/>
+   </bean>
+  <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+       <!--  <property name="dataSource" ref="dataSource" /> -->
+        <property name="configLocation" value="classpath:hibernate.cfg.xml" />
+    </bean>
+    <tx:annotation-driven />
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+           <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/Pages/"></property>
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+    
+    
+     
+ </beans>
