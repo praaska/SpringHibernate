@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -17,6 +18,9 @@ public class ItemMaster {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	/*@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SeqGen")
+	@SequenceGenerator(name = "SeqGen", sequenceName = "hibernate_sequence", allocationSize = 1)*/
+	@Column(name="item_code")
 	private long item_code;
 	private String item_name;
 	private double price;
@@ -24,9 +28,7 @@ public class ItemMaster {
 	@Temporal(TemporalType.DATE)
 	@Column(name="CreatedOn")
 	private Date createdon;
-	@Id
-	@GeneratedValue
-	@Column(name="item_code")
+	
 	public long getItem_code() {
 		return item_code;
 	}

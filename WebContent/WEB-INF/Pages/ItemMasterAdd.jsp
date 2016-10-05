@@ -29,6 +29,7 @@
 		</ul>
 		
 			<div id="tabs-1">
+			<jsp:include page="error.jsp"></jsp:include>
 				<input name="item_code" type="hidden" value="${item.item_code}">
 				<div align="center">
 					<h1>Item Details</h1>
@@ -54,9 +55,9 @@
 						</tr>
 						<tr>
 							<th><input type="submit" value="Add New Item"></th>
-							<th><input type="button" value="Update" onclick="update()" />
-								<input type="button" value="List" onclick="list()" /> <input
-								type="button" value="Clear" onClick="clearFields()"></th>
+							<!-- <th><input type="button" value="Update" onclick="update()" />
+								<input type="button" value="List" onclick="list()" /> --> 
+								<th><input type="button" value="Clear" onClick="clearFields()"></th>
 
 						</tr>
 

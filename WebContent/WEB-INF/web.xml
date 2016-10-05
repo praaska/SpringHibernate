@@ -10,13 +10,13 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
       <init-param>
       <param-name>contextConfigLocation</param-name>
       <param-value>
-                /WEB-INF/inventory-servlet-jpa.xml
+                /WEB-INF/inventory-servlet-jdbc.xml
             </param-value>
     </init-param>
       <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
       <servlet-name>admin</servlet-name>
-      <url-pattern>*.do</url-pattern>
+      <url-pattern>/*</url-pattern>
   </servlet-mapping>
 </web-app>

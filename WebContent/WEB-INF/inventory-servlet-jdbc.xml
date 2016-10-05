@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+				http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+				 http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+				http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
+				http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+<context:annotation-config/>
+      <context:component-scan base-package="org.haritha.learning"/>
+     <mvc:annotation-driven />
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+         <property name="driverClassName" value="org.postgresql.Driver"/>
+         <property name="url" value="jdbc:postgresql://localhost:5432/hibernatedb"/>
+         <property name="username" value="postgres" />
+         <property name="password" value="Makesure1!" />
+   </bean>
+   <tx:annotation-driven/>
+    
+   <bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+   
+    <bean id="jdbcItemMasterDao" class="org.haritha.learning.jdbc.dao.impl.JdbcItemMasterDaoImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean id="jdbcLoginDao" class="org.haritha.learning.jdbc.dao.impl.JdbcLoginDaoImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+     <bean id="itemMasterService" class="org.haritha.learning.service.impl.ItemMasterServiceImpl">
+       <property name="jdbcItemMasterDao" ref="jdbcItemMasterDao"/>
+   </bean>
+    <bean id="loginService" class="org.haritha.learning.service.impl.LoginServiceImpl">
+       <property name="jdbcLoginDao" ref="jdbcLoginDao"/>
+   </bean>
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/Pages/"></property>
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+
+</beans>

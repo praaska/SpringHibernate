@@ -19,6 +19,7 @@ public class LoginController {
 	    public ModelAndView displayLogin()
 	
 	    {	
+		    System.out.println("In login page");
 	        ModelAndView model = new ModelAndView("LoginPage");
 	        LoginBean loginBean = new LoginBean();
 	        model.addObject("loginBean", loginBean);
@@ -30,19 +31,19 @@ public class LoginController {
 	public ModelAndView login(@ModelAttribute("login") LoginBean login)
 	{
 		ModelAndView model= null;
+		boolean isValidUser;
 		System.out.println("in controller");
-		boolean isValidUser=loginService.isValidUser(login.getUsername(), login.getPassword());
-		if(isValidUser){
-			System.out.println("login successful");
-		 	model=new ModelAndView("redirect:/addLoadForm.do");
-			//return "redirect:/addLoadForm";
+		try{
+		isValidUser=loginService.isValidUser(login.getUsername(), login.getPassword());
 		}
-		else{
-			System.out.println("login failure");
+		catch(Exception e){
 			model=new ModelAndView("LoginPage");
-			model.addObject("error", "error");
+			model.addObject("errorMessage", "Invalid Credentials. Your username or password is incorrect.");
+			return model;
 		}
 		
+		 	model=new ModelAndView("redirect:/addLoadForm.do");
+				
 		
 		return model;
 

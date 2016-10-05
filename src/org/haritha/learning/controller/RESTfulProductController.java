@@ -8,14 +8,18 @@ import org.haritha.learning.service.ItemMasterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-@Controller
-public class ProductController {
 
+@Controller
+@RequestMapping("/productController")
+public class RESTfulProductController {
 	@Autowired
 	private ItemMasterService itemMasterService;
 	@RequestMapping(value="/list")
@@ -50,17 +54,15 @@ public class ProductController {
 		return model;
 		
 	}
-	@RequestMapping(value="/edit")
-	public ModelAndView edit(@RequestParam(value="id",required=true)Long id)
+	@RequestMapping(value="/{id}",method=RequestMethod.GET)
+	@ResponseBody
+	public ItemMasterBean edit(@PathVariable("id") long id)
 	{
 		System.out.println("ID="+id);
-		ModelAndView model=new ModelAndView("ItemMasterAdd");
+		
 		ItemMasterBean item=itemMasterService.getItem(id);
-		model.addObject("item", item);
-		List<ItemMasterBean> itemList=itemMasterService.list();
-		model.addObject("itemList", itemList);
-		model.addObject("editlistattr","edit");
-		return model;
+		
+		return item;
 		
 	}
 	@RequestMapping(value="/delete")
@@ -130,7 +132,5 @@ public class ProductController {
 		
 		return model;
 	}
+
 }
-	
-
-

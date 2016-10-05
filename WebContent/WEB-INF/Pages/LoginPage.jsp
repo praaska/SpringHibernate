@@ -12,9 +12,7 @@
 
 
 <h1>Login Page</h1>
-<c:if test="${not empty error}">
-     <p style="color:red;"> Invalid Credentials. Your username or password is incorrect.</p>
-</c:if>
+<jsp:include page="error.jsp"></jsp:include>
 <table>
 <tr>
 <td>Username:<input type="text" name="username"/></td>
